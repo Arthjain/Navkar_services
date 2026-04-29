@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server'
 import { createServiceSupabase } from '@/lib/supabase'
 
+export const dynamic = 'force-dynamic'
+
 // Public endpoint — anyone can read auction timing for countdown display
 export async function GET() {
   const db = createServiceSupabase()

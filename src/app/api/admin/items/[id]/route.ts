@@ -3,6 +3,8 @@ import { z } from 'zod'
 import { requireAdmin } from '@/lib/auth'
 import { createServiceSupabase } from '@/lib/supabase'
 
+export const dynamic = 'force-dynamic'
+
 const patchSchema = z.object({
   name:           z.string().min(1).optional(),
   description:    z.string().optional(),

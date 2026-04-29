@@ -3,6 +3,8 @@ import { z } from 'zod'
 import { requireAdmin } from '@/lib/auth'
 import { createServiceSupabase } from '@/lib/supabase'
 
+export const dynamic = 'force-dynamic'
+
 const schema = z.object({
   auction_end_at: z.string().datetime().nullable().optional(),
   is_live:        z.boolean().optional(),

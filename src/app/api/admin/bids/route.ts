@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { requireAdmin } from '@/lib/auth'
 import { createServiceSupabase } from '@/lib/supabase'
 
+export const dynamic = 'force-dynamic'
+
 // GET /api/admin/bids?item_id=xxx  — full bid log with bidder identity
 export async function GET(req: NextRequest) {
   try {
