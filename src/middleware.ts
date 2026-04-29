@@ -1,10 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { jwtVerify } from 'jose'
-import { getSessionSecret } from '@/lib/session-secret'
-
-const secret = new TextEncoder().encode(
-  getSessionSecret()
-)
+import { getSecretKey } from '@/lib/session-secret'
 
 // Paths that require a valid session
 const AUTH_PATHS  = ['/my-bids']
@@ -28,7 +24,7 @@ export async function middleware(req: NextRequest) {
   }
 
   try {
-    const { payload } = await jwtVerify(token, secret)
+    const { payload } = await jwtVerify(token, getSecretKey())
 
     if (needsAdmin && !payload.is_admin) {
       return NextResponse.redirect(new URL('/', req.url))

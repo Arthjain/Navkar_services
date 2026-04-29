@@ -1,11 +1,7 @@
 import { cookies } from 'next/headers'
 import { SignJWT, jwtVerify } from 'jose'
 import type { SessionUser } from '@/types'
-import { getSessionSecret } from '@/lib/session-secret'
-
-const secret = new TextEncoder().encode(
-  getSessionSecret()
-)
+import { getSecretKey } from '@/lib/session-secret'
 
 // ── Bidder session ─────────────────────────────────────────────
 
@@ -14,7 +10,7 @@ export async function setSessionCookie(user: SessionUser) {
     .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()
     .setExpirationTime('30d')
-    .sign(secret)
+    .sign(getSecretKey())
 
   const cookieStore = await cookies()
   cookieStore.set('session', token, {
@@ -31,7 +27,7 @@ export async function getSession(): Promise<SessionUser | null> {
   const token = cookieStore.get('session')?.value
   if (!token) return null
   try {
-    const { payload } = await jwtVerify(token, secret)
+    const { payload } = await jwtVerify(token, getSecretKey())
     return payload as unknown as SessionUser
   } catch {
     return null
@@ -56,7 +52,7 @@ export async function setAdminCookie() {
     .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()
     .setExpirationTime('7d')
-    .sign(secret)
+    .sign(getSecretKey())
 
   const cookieStore = await cookies()
   cookieStore.set('admin_session', token, {
@@ -73,7 +69,7 @@ export async function getAdminSession(): Promise<boolean> {
   const token = cookieStore.get('admin_session')?.value
   if (!token) return false
   try {
-    const { payload } = await jwtVerify(token, secret)
+    const { payload } = await jwtVerify(token, getSecretKey())
     return payload.is_admin === true
   } catch {
     return false
