@@ -149,16 +149,22 @@ alter table bidder_handles enable row level security;
 alter table auction_config enable row level security;
 
 -- Items: public read, service-role write
+drop policy if exists "items_public_read"   on items;
+drop policy if exists "items_service_write" on items;
 create policy "items_public_read"   on items for select using (true);
 create policy "items_service_write" on items for all   using (auth.role() = 'service_role');
 
 -- Bids: service role only (public reads via view)
+drop policy if exists "bids_service_only"   on bids;
 create policy "bids_service_only"   on bids for all    using (auth.role() = 'service_role');
 
 -- Bidder handles: service role only
+drop policy if exists "handles_service_only" on bidder_handles;
 create policy "handles_service_only" on bidder_handles for all using (auth.role() = 'service_role');
 
 -- Auction config: public read, service write
+drop policy if exists "config_public_read"  on auction_config;
+drop policy if exists "config_service_write" on auction_config;
 create policy "config_public_read"  on auction_config for select using (true);
 create policy "config_service_write" on auction_config for all   using (auth.role() = 'service_role');
 
