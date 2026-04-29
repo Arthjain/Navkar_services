@@ -11,8 +11,7 @@ export async function GET() {
     .from('items')
     .select(`
       id, name, description, category, starting_price, min_increment,
-      image_urls, current_top_bid, status, created_at,
-      top_bidder:users!current_top_bidder_id ( anon_handle )
+      image_urls, current_top_bid, current_top_anon, status, created_at
     `)
     .order('created_at', { ascending: true })
 
