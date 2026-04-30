@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import { requireAdmin } from '@/lib/auth'
 import { createServiceSupabase } from '@/lib/supabase'
+import { getCatalogItems } from '@/lib/catalog-items'
 
 export const dynamic = 'force-dynamic'
 
@@ -18,13 +19,8 @@ const itemSchema = z.object({
 export async function GET() {
   try {
     await requireAdmin()
-    const db = createServiceSupabase()
-    const { data, error } = await db
-      .from('items')
-      .select('*')
-      .order('created_at', { ascending: true })
-    if (error) throw error
-    return NextResponse.json({ items: data })
+    const { items, source } = await getCatalogItems()
+    return NextResponse.json({ items, catalog_source: source })
   } catch (err: unknown) {
     if (err instanceof Error && err.message === 'FORBIDDEN') {
       return NextResponse.json({ error: 'Admin only' }, { status: 403 })

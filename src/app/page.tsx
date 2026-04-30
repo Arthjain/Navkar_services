@@ -16,7 +16,7 @@ export default function CatalogPage() {
   const [loading, setLoading]     = useState(true)
   const [search, setSearch]       = useState('')
   const [category, setCategory]   = useState('All')
-  const [statusFilter, setStatus] = useState<'all' | 'open' | 'closed'>('open')
+  const [statusFilter, setStatus] = useState<'all' | 'open' | 'closed'>('all')
   
   const { t } = useLanguage()
 

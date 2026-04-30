@@ -12,6 +12,7 @@ interface PageData {
   item: Item & { top_bidder?: { anon_handle: string } | null }
   bids: PublicBid[]
   config: AuctionConfig | null
+  catalog_source?: 'db' | 'csv'
 }
 
 export default function ItemPage({ params }: { params: Promise<{ id: string }> }) {
@@ -125,6 +126,7 @@ export default function ItemPage({ params }: { params: Promise<{ id: string }> }
   const minNext = (topBid ?? item.starting_price) + item.min_increment
   const isClosed = item.status === 'closed'
   const brand    = item.category?.trim() || null
+  const isCsvFallback = data.catalog_source === 'csv'
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -179,6 +181,12 @@ export default function ItemPage({ params }: { params: Promise<{ id: string }> }
           </div>
           {item.description && <p className="text-gray-600">{item.description}</p>}
 
+          {isCsvFallback && (
+            <div className="card p-4 bg-amber-50 border border-amber-200 text-amber-900 text-sm">
+              This item is currently loaded from the CSV catalog. Seed it into Supabase to enable bidding and bid history.
+            </div>
+          )}
+
           {config && <CountdownTimer endAt={config.auction_end_at} isLive={config.is_live} />}
 
           {/* Current bid display */}
@@ -204,7 +212,7 @@ export default function ItemPage({ params }: { params: Promise<{ id: string }> }
           </div>
 
           {/* Bid form */}
-          {!isClosed ? (
+          {!isClosed && !isCsvFallback ? (
             user ? (
               <form onSubmit={handleBid} className="space-y-3">
                 <div className="flex gap-3">
@@ -241,6 +249,10 @@ export default function ItemPage({ params }: { params: Promise<{ id: string }> }
                 {t('item.login_to_bid')}
               </Link>
             )
+          ) : isCsvFallback ? (
+            <div className="bg-gray-100 rounded-lg px-4 py-3 text-gray-600 text-sm font-medium text-center">
+              This item is not yet seeded into Supabase.
+            </div>
           ) : (
             <div className="bg-gray-100 rounded-lg px-4 py-3 text-gray-600 text-sm font-medium text-center">
               {t('item.closed_msg')}

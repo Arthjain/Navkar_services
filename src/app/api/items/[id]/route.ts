@@ -1,27 +1,24 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createServiceSupabase } from '@/lib/supabase'
+import { getCatalogItem } from '@/lib/catalog-items'
 
 export async function GET(
   _req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params
-  const db = createServiceSupabase()
 
-  // Item details
-  const { data: item, error: itemErr } = await db
-    .from('items')
-    .select(`
-      id, name, description, category, starting_price, min_increment,
-      image_urls, current_top_bid, status, created_at,
-      top_bidder:users!current_top_bidder_id ( anon_handle )
-    `)
-    .eq('id', id)
-    .single()
+  const { item, source } = await getCatalogItem(id)
 
-  if (itemErr || !item) {
+  if (!item) {
     return NextResponse.json({ error: 'Item not found' }, { status: 404 })
   }
+
+  if (source === 'csv') {
+    return NextResponse.json({ item, bids: [], config: null, catalog_source: source })
+  }
+
+  const db = createServiceSupabase()
 
   // Anonymised bid history via public_bids view
   const { data: bids, error: bidsErr } = await db
@@ -41,5 +38,5 @@ export async function GET(
     .eq('id', 1)
     .single()
 
-  return NextResponse.json({ item, bids: bids ?? [], config })
+  return NextResponse.json({ item, bids: bids ?? [], config, catalog_source: source })
 }

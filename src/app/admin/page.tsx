@@ -31,6 +31,7 @@ export default function AdminPage() {
   const [loading, setLoading]   = useState(true)
   const [bidItem, setBidItem]   = useState<string>('all')
   const [msg, setMsg]           = useState('')
+  const [catalogSource, setCatalogSource] = useState<'db' | 'csv'>('db')
   const { t } = useLanguage()
 
   // New item form
@@ -54,6 +55,7 @@ export default function AdminPage() {
     const r = await fetch('/api/admin/items')
     const d = await r.json()
     setItems(d.items ?? [])
+    setCatalogSource(d.catalog_source ?? 'db')
     setLoading(false)
   }
 
@@ -166,6 +168,12 @@ export default function AdminPage() {
       {/* ── ITEMS TAB ──────────────────────────────────────────────── */}
       {tab === 'items' && (
         <div className="space-y-6">
+          {catalogSource === 'csv' && (
+            <div className="card p-4 bg-amber-50 border border-amber-200 text-amber-900 text-sm">
+              CSV fallback is being shown because Supabase is unavailable in this environment. Mutating actions are disabled until the live database is connected.
+            </div>
+          )}
+
           {/* Add item form */}
           <div className="card p-6">
             <h2 className="font-semibold text-lg mb-4">Add Item</h2>
@@ -232,7 +240,11 @@ export default function AdminPage() {
                       </span>
                     </td>
                     <td className="px-4 py-3 text-right">
-                      <button onClick={() => deleteItem(item.id, item.name)} className="text-red-400 hover:text-red-600 text-xs">Delete</button>
+                      {catalogSource === 'csv' ? (
+                        <span className="text-xs text-gray-400">Read only</span>
+                      ) : (
+                        <button onClick={() => deleteItem(item.id, item.name)} className="text-red-400 hover:text-red-600 text-xs">Delete</button>
+                      )}
                     </td>
                   </tr>
                 ))}
