@@ -88,20 +88,23 @@ export default function CatalogPage() {
           onChange={e => setSearch(e.target.value)}
           className="input max-w-xs"
         />
-        <div className="flex gap-2 flex-wrap">
-          {categories.map(cat => (
-            <button
-              key={cat}
-              onClick={() => setCategory(cat)}
-              className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
-                category === cat
-                  ? 'bg-brand-navy text-white'
-                  : 'bg-white text-gray-600 border border-gray-200 hover:border-brand-navy'
-              }`}
-            >
-              {cat === 'All' ? t('home.all_items') : cat}
-            </button>
-          ))}
+        <div className="flex flex-col gap-2">
+          <div className="text-xs uppercase tracking-[0.2em] text-gray-400 font-semibold">Brands</div>
+          <div className="flex gap-2 flex-wrap">
+            {categories.map(cat => (
+              <button
+                key={cat}
+                onClick={() => setCategory(cat)}
+                className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+                  category === cat
+                    ? 'bg-brand-navy text-white'
+                    : 'bg-white text-gray-600 border border-gray-200 hover:border-brand-navy'
+                }`}
+              >
+                {cat === 'All' ? t('home.all_items') : cat}
+              </button>
+            ))}
+          </div>
         </div>
         <select
           value={statusFilter}

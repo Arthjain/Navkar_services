@@ -28,6 +28,8 @@ const translations: Record<Language, Record<string, string>> = {
     'home.no_items': 'No items found',
 
     'card.starting_price': 'Starting price',
+    'card.brand': 'Brand',
+    'card.product': 'Product',
     'card.top_bid': 'Top bid',
     'card.no_bids': 'No bids yet — be first!',
     'card.min_next': 'Min next bid: ₹{amount}',
@@ -35,6 +37,8 @@ const translations: Record<Language, Record<string, string>> = {
 
     'item.back': '← Back to catalog',
     'item.auction_closed': 'AUCTION CLOSED',
+    'item.brand': 'Brand',
+    'item.product': 'Product',
     'item.starting_price': 'Starting price',
     'item.highest_bid': 'Highest bid',
     'item.no_bids': 'No bids yet',
@@ -91,6 +95,8 @@ const translations: Record<Language, Record<string, string>> = {
     'home.no_items': 'कोई आइटम नहीं मिला',
 
     'card.starting_price': 'शुरुआती कीमत',
+    'card.brand': 'ब्रांड',
+    'card.product': 'उत्पाद',
     'card.top_bid': 'सबसे बड़ी बोली',
     'card.no_bids': 'कोई बोली नहीं — पहले बनें!',
     'card.min_next': 'अगली न्यूनतम बोली: ₹{amount}',
@@ -98,6 +104,8 @@ const translations: Record<Language, Record<string, string>> = {
 
     'item.back': '← कैटलॉग पर वापस जाएं',
     'item.auction_closed': 'नीलामी बंद',
+    'item.brand': 'ब्रांड',
+    'item.product': 'उत्पाद',
     'item.starting_price': 'शुरुआती कीमत',
     'item.highest_bid': 'सबसे बड़ी बोली',
     'item.no_bids': 'कोई बोली नहीं',

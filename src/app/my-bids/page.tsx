@@ -106,7 +106,7 @@ function BidRow({ bid }: { bid: MyBid }) {
       <div>
         <div className="font-semibold text-gray-900 line-clamp-1">{bid.item.name}</div>
         <div className="text-xs text-gray-400 mt-0.5">
-          {bid.item.category && <span className="mr-2">{bid.item.category}</span>}
+          {bid.item.category && <span className="mr-2">{t('item.brand')}: {bid.item.category}</span>}
           {new Date(bid.created_at).toLocaleString('en-IN', { dateStyle: 'short', timeStyle: 'short' })}
         </div>
       </div>

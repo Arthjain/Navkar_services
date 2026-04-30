@@ -32,12 +32,15 @@ export default function ItemCard({ item }: Props) {
           </div>
         )}
         {item.category && (
-          <span className="absolute top-2 left-2 badge bg-brand-navy/80 text-white">{item.category}</span>
+          <span className="absolute top-2 left-2 badge bg-brand-navy/80 text-white">
+            {t('card.brand')}: {item.category}
+          </span>
         )}
       </div>
 
       {/* Content */}
       <div className="p-4">
+        <div className="text-xs uppercase tracking-[0.2em] text-gray-400 font-semibold mb-1">{t('card.product')}</div>
         <h3 className="font-semibold text-gray-900 line-clamp-2 mb-3 leading-snug">{item.name}</h3>
 
         <div className="space-y-1.5">

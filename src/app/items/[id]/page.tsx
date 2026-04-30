@@ -165,9 +165,12 @@ export default function ItemPage({ params }: { params: Promise<{ id: string }> }
         {/* Right — details + bid */}
         <div className="space-y-5">
           {item.category && (
-            <span className="badge bg-brand-navy/10 text-brand-navy">{item.category}</span>
+            <span className="badge bg-brand-navy/10 text-brand-navy">{t('item.brand')}: {item.category}</span>
           )}
-          <h1 className="text-2xl font-bold text-gray-900">{item.name}</h1>
+          <div>
+            <div className="text-xs uppercase tracking-[0.2em] text-gray-400 font-semibold mb-1">{t('item.product')}</div>
+            <h1 className="text-2xl font-bold text-gray-900">{item.name}</h1>
+          </div>
           {item.description && <p className="text-gray-600">{item.description}</p>}
 
           {config && <CountdownTimer endAt={config.auction_end_at} isLive={config.is_live} />}
