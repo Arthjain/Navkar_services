@@ -124,6 +124,7 @@ export default function ItemPage({ params }: { params: Promise<{ id: string }> }
   const topBid  = item.current_top_bid
   const minNext = (topBid ?? item.starting_price) + item.min_increment
   const isClosed = item.status === 'closed'
+  const brand    = item.category?.trim() || null
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -164,9 +165,14 @@ export default function ItemPage({ params }: { params: Promise<{ id: string }> }
 
         {/* Right — details + bid */}
         <div className="space-y-5">
-          {item.category && (
-            <span className="badge bg-brand-navy/10 text-brand-navy">{t('item.brand')}: {item.category}</span>
-          )}
+          <div className="rounded-2xl border border-brand-navy/10 bg-brand-navy/5 px-4 py-3">
+            <div className="text-[11px] uppercase tracking-[0.24em] text-gray-400 font-semibold mb-1">
+              {t('item.brand')}
+            </div>
+            <div className="text-lg font-semibold text-brand-navy whitespace-normal break-words">
+              {brand ?? t('item.brand_missing')}
+            </div>
+          </div>
           <div>
             <div className="text-xs uppercase tracking-[0.2em] text-gray-400 font-semibold mb-1">{t('item.product')}</div>
             <h1 className="text-2xl font-bold text-gray-900">{item.name}</h1>

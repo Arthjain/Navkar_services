@@ -101,12 +101,15 @@ export default function MyBidsPage() {
 function BidRow({ bid }: { bid: MyBid }) {
   const { t } = useLanguage()
   if (!bid.item) return null
+  const brand = bid.item.category?.trim() || null
   return (
     <Link href={`/items/${bid.item.id}`} className="card p-4 flex items-center justify-between hover:shadow-md transition-shadow">
       <div>
+        <div className="text-[11px] uppercase tracking-[0.24em] text-gray-400 font-semibold">{t('item.brand')}</div>
+        <div className="font-semibold text-brand-navy whitespace-normal break-words leading-snug min-h-[1.5rem]">{brand ?? t('item.brand_missing')}</div>
+        <div className="text-[11px] uppercase tracking-[0.24em] text-gray-400 font-semibold mt-2">{t('item.product')}</div>
         <div className="font-semibold text-gray-900 line-clamp-1">{bid.item.name}</div>
         <div className="text-xs text-gray-400 mt-0.5">
-          {bid.item.category && <span className="mr-2">{t('item.brand')}: {bid.item.category}</span>}
           {new Date(bid.created_at).toLocaleString('en-IN', { dateStyle: 'short', timeStyle: 'short' })}
         </div>
       </div>

@@ -9,6 +9,7 @@ export default function ItemCard({ item }: Props) {
   const topBid = item.current_top_bid
   const minNext = (topBid ?? item.starting_price) + item.min_increment
   const handle  = item.current_top_anon
+  const brand   = item.category?.trim() || null
   const { t } = useLanguage()
 
   return (
@@ -31,17 +32,21 @@ export default function ItemCard({ item }: Props) {
             <span className="text-white font-bold text-lg">{t('card.closed')}</span>
           </div>
         )}
-        {item.category && (
-          <span className="absolute top-2 left-2 badge bg-brand-navy/80 text-white">
-            {t('card.brand')}: {item.category}
-          </span>
-        )}
       </div>
 
       {/* Content */}
-      <div className="p-4">
-        <div className="text-xs uppercase tracking-[0.2em] text-gray-400 font-semibold mb-1">{t('card.product')}</div>
-        <h3 className="font-semibold text-gray-900 line-clamp-2 mb-3 leading-snug">{item.name}</h3>
+      <div className="p-4 space-y-3">
+        <div className="rounded-xl border border-brand-navy/10 bg-brand-navy/5 px-3 py-2">
+          <div className="text-[11px] uppercase tracking-[0.24em] text-gray-400 font-semibold">{t('card.brand')}</div>
+          <div className="text-sm font-semibold text-brand-navy leading-snug whitespace-normal break-words min-h-[1.5rem]">
+            {brand ?? t('card.brand_missing')}
+          </div>
+        </div>
+
+        <div>
+          <div className="text-xs uppercase tracking-[0.2em] text-gray-400 font-semibold mb-1">{t('card.product')}</div>
+          <h3 className="font-semibold text-gray-900 line-clamp-2 leading-snug">{item.name}</h3>
+        </div>
 
         <div className="space-y-1.5">
           <div className="flex justify-between items-center text-sm">
