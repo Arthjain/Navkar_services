@@ -16,7 +16,7 @@ You need to populate the live website with the items from your inventory.
 3. Once logged in, navigate to the **Admin Dashboard** (click "Admin" in the navbar).
 4. Click the **📥 Import Items** button in the top right.
 5. Upload the `items_to_import.csv` file located in your project root.
-6. Verify the imported items are correct. 
+6. Verify the imported items are correct. The `name` column is the product name, and `category` is the company/brand name.
 *(Note: If you need to change the default starting price of ₹1,000, you can edit the CSV file on your computer before uploading, or delete and re-add specific items via the Admin dashboard).*
 
 ## 2. Configure & Launch the Auction

@@ -77,9 +77,9 @@ export default function AdminPage() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        name: form.name,
-        description: form.description || undefined,
-        category: form.category || undefined,
+        name: form.name.trim(),
+        description: form.description.trim() || undefined,
+        category: form.category.trim() || undefined,
         starting_price: parseFloat(form.starting_price),
         min_increment: parseFloat(form.min_increment) || 100,
         image_urls: urls,
@@ -171,12 +171,12 @@ export default function AdminPage() {
             <h2 className="font-semibold text-lg mb-4">Add Item</h2>
             <form onSubmit={addItem} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               <div className="lg:col-span-2">
-                <label className="block text-sm font-medium text-gray-700 mb-1">Name *</label>
-                <input className="input" required value={form.name} onChange={e => setForm(f => ({...f, name: e.target.value}))} placeholder="Samsung Galaxy S24" />
+                <label className="block text-sm font-medium text-gray-700 mb-1">Product Name *</label>
+                <input className="input" required value={form.name} onChange={e => setForm(f => ({...f, name: e.target.value}))} placeholder="Aquaquick 3L Gyser" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
-                <input className="input" value={form.category} onChange={e => setForm(f => ({...f, category: e.target.value}))} placeholder="Bajaj" />
+                <label className="block text-sm font-medium text-gray-700 mb-1">Company / Brand</label>
+                <input className="input" value={form.category} onChange={e => setForm(f => ({...f, category: e.target.value}))} placeholder="Bajaj, Crompton, Usha" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Starting Price (₹) *</label>
@@ -205,8 +205,8 @@ export default function AdminPage() {
             <table className="w-full text-sm">
               <thead className="bg-gray-50 text-gray-500 uppercase text-xs tracking-wide">
                 <tr>
-                  <th className="text-left px-4 py-3">Name</th>
-                  <th className="text-left px-4 py-3">Cat.</th>
+                  <th className="text-left px-4 py-3">Product</th>
+                  <th className="text-left px-4 py-3">Brand</th>
                   <th className="text-right px-4 py-3">Start ₹</th>
                   <th className="text-right px-4 py-3">Top Bid ₹</th>
                   <th className="text-center px-4 py-3">Status</th>

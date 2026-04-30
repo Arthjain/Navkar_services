@@ -52,7 +52,13 @@ export default function ImportPage() {
       const min_increment  = parseFloat(incrementStr) || 100
       const image_urls     = imageStr ? imageStr.split(',').map((u: string) => u.trim()).filter(Boolean) : []
 
-      const error = !name ? 'Missing name' : isNaN(starting_price) ? 'Invalid starting_price' : undefined
+      const error = !name
+        ? 'Missing name'
+        : !category
+          ? 'Missing brand/company'
+          : isNaN(starting_price)
+            ? 'Invalid starting_price'
+            : undefined
 
       return { name, description, category, starting_price, min_increment, image_urls, error, _row: i + 2 } as ParsedRow & { _row: number }
     })
@@ -89,18 +95,20 @@ export default function ImportPage() {
       <div className="flex items-center gap-3 mb-6">
         <Link href="/admin" className="text-gray-400 hover:text-brand-navy">← Admin</Link>
         <span className="text-gray-300">/</span>
-        <h1 className="text-2xl font-bold text-brand-navy">Import Items from CSV or Excel</h1>
+        <h1 className="text-2xl font-bold text-brand-navy">Import Products from CSV or Excel</h1>
       </div>
 
       {/* Template info */}
       <div className="card p-5 mb-6 bg-blue-50 border-blue-200">
         <h2 className="font-semibold text-blue-800 mb-2">Expected columns</h2>
         <div className="text-sm text-blue-700 font-mono grid grid-cols-2 sm:grid-cols-3 gap-1">
-          {['name *', 'starting_price *', 'description', 'category', 'min_increment', 'image_url'].map(col => (
+          {['name = product *', 'category = company / brand *', 'starting_price *', 'description', 'min_increment', 'image_url'].map(col => (
             <span key={col} className="bg-white rounded px-2 py-1 border border-blue-200">{col}</span>
           ))}
         </div>
-        <p className="text-xs text-blue-600 mt-2">* required. image_url can be comma-separated for multiple images.</p>
+        <p className="text-xs text-blue-600 mt-2">
+          * required. <code className="px-1 py-0.5 bg-white rounded border border-blue-200">name</code> is the product name and <code className="px-1 py-0.5 bg-white rounded border border-blue-200">category</code> is the company/brand name. image_url can be comma-separated for multiple images.
+        </p>
       </div>
 
       {/* File upload */}
@@ -136,8 +144,8 @@ export default function ImportPage() {
             <table className="w-full text-sm">
               <thead className="bg-gray-50 text-gray-500 uppercase text-xs tracking-wide">
                 <tr>
-                  <th className="text-left px-4 py-3">Name</th>
-                  <th className="text-left px-4 py-3">Category</th>
+                  <th className="text-left px-4 py-3">Product</th>
+                  <th className="text-left px-4 py-3">Brand</th>
                   <th className="text-right px-4 py-3">Start ₹</th>
                   <th className="text-right px-4 py-3">Incr. ₹</th>
                   <th className="text-left px-4 py-3">Images</th>

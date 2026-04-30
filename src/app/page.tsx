@@ -6,6 +6,7 @@ import ItemCard from '@/components/ItemCard'
 import CountdownTimer from '@/components/CountdownTimer'
 import type { Item, AuctionConfig } from '@/types'
 import { useLanguage } from '@/lib/i18n'
+import { CATALOG_BRANDS } from '@/lib/catalog-brands'
 
 type ItemWithBidder = Item & { top_bidder?: { anon_handle: string } | null }
 
@@ -49,14 +50,14 @@ export default function CatalogPage() {
   const filtered = useMemo(() => {
     return items.filter(item => {
       const matchSearch = !search || item.name.toLowerCase().includes(search.toLowerCase())
-      const matchCat    = category === 'All' || item.category === category
+      const matchCat    = category === 'All' || item.category?.trim() === category
       const matchStatus = statusFilter === 'all' || item.status === statusFilter
       return matchSearch && matchCat && matchStatus
     })
   }, [items, search, category, statusFilter])
 
   const categories = useMemo(() => {
-    const uniqueCategories = Array.from(
+    const itemCategories = Array.from(
       new Set(
         items
           .map(item => item.category?.trim())
@@ -64,7 +65,7 @@ export default function CatalogPage() {
       )
     ).sort((left, right) => left.localeCompare(right))
 
-    return ['All', ...uniqueCategories]
+    return ['All', ...Array.from(new Set([...CATALOG_BRANDS, ...itemCategories]))]
   }, [items])
 
   return (

@@ -122,7 +122,7 @@ ADMIN_EMAIL=your@email.com`}</Code>
       children: (
         <>
           <p>Prepare a CSV or Excel file with these columns:</p>
-          <Code>{`name | starting_price | description | category | min_increment | image_url`}</Code>
+          <Code>{`name = product * | category = company / brand * | starting_price * | description | min_increment | image_url`}</Code>
           <p>Then:</p>
           <ol className="list-decimal list-inside space-y-1">
             <li>Login as admin</li>
