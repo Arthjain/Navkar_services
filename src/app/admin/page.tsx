@@ -148,7 +148,7 @@ export default function AdminPage() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-3xl font-bold text-brand-navy">{t('admin.dashboard') || 'Admin Dashboard'}</h1>
-        <Link href="/admin/import" className="btn-secondary text-sm">📥 Import Excel</Link>
+        <Link href="/admin/import" className="btn-secondary text-sm">📥 Import Items</Link>
       </div>
 
       {msg && <div className="mb-4 rounded-lg px-4 py-3 bg-blue-50 text-blue-800 text-sm font-medium">{msg}</div>}
@@ -176,7 +176,7 @@ export default function AdminPage() {
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
-                <input className="input" value={form.category} onChange={e => setForm(f => ({...f, category: e.target.value}))} placeholder="Mobile" />
+                <input className="input" value={form.category} onChange={e => setForm(f => ({...f, category: e.target.value}))} placeholder="Bajaj" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Starting Price (₹) *</label>

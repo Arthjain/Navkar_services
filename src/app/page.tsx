@@ -9,8 +9,6 @@ import { useLanguage } from '@/lib/i18n'
 
 type ItemWithBidder = Item & { top_bidder?: { anon_handle: string } | null }
 
-const CATEGORIES = ['All', 'Mobile', 'Laptop', 'TV', 'Audio', 'Camera', 'Accessories', 'Other']
-
 export default function CatalogPage() {
   const [items, setItems]         = useState<ItemWithBidder[]>([])
   const [config, setConfig]       = useState<AuctionConfig | null>(null)
@@ -57,6 +55,18 @@ export default function CatalogPage() {
     })
   }, [items, search, category, statusFilter])
 
+  const categories = useMemo(() => {
+    const uniqueCategories = Array.from(
+      new Set(
+        items
+          .map(item => item.category?.trim())
+          .filter((value): value is string => Boolean(value))
+      )
+    ).sort((left, right) => left.localeCompare(right))
+
+    return ['All', ...uniqueCategories]
+  }, [items])
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {/* Header */}
@@ -78,7 +88,7 @@ export default function CatalogPage() {
           className="input max-w-xs"
         />
         <div className="flex gap-2 flex-wrap">
-          {CATEGORIES.map(cat => (
+          {categories.map(cat => (
             <button
               key={cat}
               onClick={() => setCategory(cat)}

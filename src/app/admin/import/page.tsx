@@ -89,12 +89,12 @@ export default function ImportPage() {
       <div className="flex items-center gap-3 mb-6">
         <Link href="/admin" className="text-gray-400 hover:text-brand-navy">← Admin</Link>
         <span className="text-gray-300">/</span>
-        <h1 className="text-2xl font-bold text-brand-navy">Import Items from Excel</h1>
+        <h1 className="text-2xl font-bold text-brand-navy">Import Items from CSV or Excel</h1>
       </div>
 
       {/* Template info */}
       <div className="card p-5 mb-6 bg-blue-50 border-blue-200">
-        <h2 className="font-semibold text-blue-800 mb-2">Expected Excel columns</h2>
+        <h2 className="font-semibold text-blue-800 mb-2">Expected columns</h2>
         <div className="text-sm text-blue-700 font-mono grid grid-cols-2 sm:grid-cols-3 gap-1">
           {['name *', 'starting_price *', 'description', 'category', 'min_increment', 'image_url'].map(col => (
             <span key={col} className="bg-white rounded px-2 py-1 border border-blue-200">{col}</span>
@@ -109,7 +109,7 @@ export default function ImportPage() {
         className="border-2 border-dashed border-gray-300 rounded-xl p-10 text-center cursor-pointer hover:border-brand-gold transition-colors mb-6"
       >
         <div className="text-4xl mb-2">📊</div>
-        <p className="text-gray-600 font-medium">{fileName || 'Click to upload .xlsx file'}</p>
+        <p className="text-gray-600 font-medium">{fileName || 'Click to upload .csv or .xlsx file'}</p>
         <p className="text-sm text-gray-400 mt-1">Supports .xlsx, .xls, .csv</p>
         <input ref={fileRef} type="file" accept=".xlsx,.xls,.csv" className="hidden" onChange={parseFile} />
       </div>

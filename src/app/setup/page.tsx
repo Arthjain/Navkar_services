@@ -121,13 +121,13 @@ ADMIN_EMAIL=your@email.com`}</Code>
       time: '15 min',
       children: (
         <>
-          <p>Prepare an Excel file with these columns:</p>
+          <p>Prepare a CSV or Excel file with these columns:</p>
           <Code>{`name | starting_price | description | category | min_increment | image_url`}</Code>
           <p>Then:</p>
           <ol className="list-decimal list-inside space-y-1">
             <li>Login as admin</li>
-            <li>Go to <Link href="/admin" className="text-brand-gold underline">/admin</Link> → click <strong>Import Excel</strong></li>
-            <li>Upload your .xlsx file, review rows, click Import</li>
+            <li>Go to <Link href="/admin" className="text-brand-gold underline">/admin</Link> → click <strong>Import Items</strong></li>
+            <li>Upload your .csv or .xlsx file, review rows, click Import</li>
           </ol>
         </>
       ),
